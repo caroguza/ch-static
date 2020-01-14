@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block subtitle %}Home{% endblock %}
+{% block enableLogo %}enable-logo{% endblock %}
+
+{% block article %}
+    <div class="container-full" style="overflow:hidden">
+        <center>
+            <br/><br/><br/>
+            <h2><b>Syncroplicity</b>
+            DrChrono Data Sync App</h2>
+            
+            <br/><br/><br/>
+            <div class="container">
+            <p>
+                Our proposed solution is a web application running constantly, providing continuous 
+                sync with an interactive overview web interface. <br/>
+                The web application will be authenticated with both your practice accounts to the 
+                <b>DrChrono</b> API, and will run an automated scheduled sync system that transfers 
+                data in the background without user intervention.
+            </p>
+            </div>
+            <br/><br/>
+        
+            <div class="row container__steps">
+                <div class="container__step col-md-12 text-center">
+                    <div style="background-image: url(/static/sync-proccess1.gif)" class="article-featured-image"></div>
+                </div>
+            </div>
+        </center>
+        
+        <center style="overflow: hidden">
+            <br/>
+            <b>
+                Have a quick question?
+                You can chat with us via <a href="{{PAGES.about.url}}#contact">email</a> or <a href="{{PAGES.about.url}}#contact">phone call</a>. You can also find us on <a href="{{SOCIAL.Twitter.url}}">Twitter</a>.
+            </b>
+            <br/><br/><br/><br/>
+            <div style="background-color: rgba(96, 214, 43, 0.08); position: relative">
+                <span style="position: relative; z-index: 20">
+                    <b>
+                    <b>Follow our newsletter and social feeds to get updates and announcements.</b>
+                    <br/><br/><br/>
+                    <span class="library">
+                        <a href="" class="btn btn-shadow btn-success btn-dark">
+                            <i class="fa fa-envelope"></i> Newsletter
+                        </a>
+                        &nbsp;  
+                        <a href="" class="btn btn-shadow btn-success btn-outline-secondary btn-dark">
+                            <i class="fa fa-twitter"></i> Twitter
+                        </a>
+                        &nbsp; 
+                        <a href="" class="btn btn-shadow btn-success btn-outline-secondary btn-dark">
+                            <i class="fa fa-linkedin"></i> LinkedIn
+                        </a>
+                    </span>
+                    <br/><br/><br/>
+                    Or send us an email at <a href="mailto:hello@monadical.com">hello@syncroplicity.com</a> if you want to say hi!
+                    </b>
+                    <br/><br/><br/><br/>
+                </span>
+            </div>
+        </center>
+    </div>
+{% endblock %}
+
+{% block bodyafter %}
+    <!-- D3 Bubbles Animation -->
+    <script type="text/javascript">
+        var elem = document.querySelector('#bubbles').getBoundingClientRect();
+        var width = elem.width;
+        var height = elem.height;
+    
+        var nodes = d3.range(200).map(function() { return {radius: Math.random() * 16 + 4}; }),
+            root = nodes[0],
+            color = d3.scale.category20();
+    
+        root.radius = 0;
+        root.fixed = true;
+    
+        var force = d3.layout.force()
+            .gravity(0.0001)
+            .charge(function(d, i) { return i ? 0 : -200; })
+            .nodes(nodes)
+            .size([width, height]);
+    
+        // root.px = width / 2;
+        // root.py = height / 2;
+        force.start();
+    
+        var svg = d3.select("#bubbles").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+    
+        svg.selectAll("circle")
+            .data(nodes.slice(1))
+          .enter().append("circle")
+            .attr("r", function(d) { return d.radius; })
+            .style("fill", function(d, i) { return color(i % 3); });
+    
+        force.on("tick", function(e) {
+          var q = d3.geom.quadtree(nodes),
+              i = 0,
+              n = nodes.length;
+    
+          while (++i < n) q.visit(collide(nodes[i]));
+    
+          svg.selectAll("circle")
+              .attr("cx", function(d) { return d.x; })
+              .attr("cy", function(d) { return d.y; });
+        });
+    
+        svg.on("mousemove", function() {
+          var p1 = d3.mouse(this);
+          root.px = p1[0];
+          root.py = p1[1];
+          force.resume();
+        });
+    
+        function collide(node) {
+          var r = node.radius + 16,
+              nx1 = node.x - r,
+              nx2 = node.x + r,
+              ny1 = node.y - r,
+              ny2 = node.y + r;
+          return function(quad, x1, y1, x2, y2) {
+            if (quad.point && (quad.point !== node)) {
+              var x = node.x - quad.point.x,
+                  y = node.y - quad.point.y,
+                  l = Math.sqrt(x * x + y * y),
+                  r = node.radius + quad.point.radius;
+              if (l < r) {
+                l = (l - r) / l * .5;
+                node.x -= x *= l;
+                node.y -= y *= l;
+                quad.point.x += x;
+                quad.point.y += y;
+              }
+            }
+            return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+          };
+        }
+    </script>
+{% endblock %}

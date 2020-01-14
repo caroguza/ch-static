@@ -1,0 +1,48 @@
+{
+    "SITE_TITLE": "Syncroplicity",
+    "SITE_DOMAIN": "syncroplicity.com",
+    "PAGES": {
+        "index": {
+            "title": "Home",
+            "url": "/index.html",
+            "template": "index.html"
+        },
+        "about": {
+            "title": "Contact us",
+            "url": "/contact_us.html",
+            "template": "contact_us.html"
+        },
+        "projects": {
+            "title": "Syncroplicity Project",
+            "url": "/project.html",
+            "template": "project.html"
+        },
+        "get_involved": {
+            "title": "Get Involved",
+            "url": "/get_involved.html",
+            "template": "get_involved.html"
+        }
+    },
+    "SOCIAL": {
+        "Twitter": {
+            "url": "https://twitter.com/",
+            "title": "Syncroplicity Twitter",
+            "icon": "twitter"
+        },
+        "Facebook": {
+            "url": "https://facebook.com/",
+            "title": "Syncroplicity Facebook",
+            "icon": "facebook"
+        },
+        "LinkedIn": {
+            "url": "https://linkedin.com/company/",
+            "title": "Syncroplicity LinkedIn",
+            "icon": "linkedin"
+        },
+        "Github": {
+            "url": "https://github.com/",
+            "title": "Syncroplicity Github",
+            "icon": "github"
+        }
+    }
+}
